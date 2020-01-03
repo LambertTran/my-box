@@ -10,7 +10,7 @@ RUN apt-get update && \
   python3
 
 RUN	apt-get install -y python3-pip 
-RUN pip3 install ansible
+RUN pip3 install ansible boto3
 RUN apt-get install -y mysql-client
 RUN apt-get install -y unzip wget openssh-server
 
