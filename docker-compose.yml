@@ -1,0 +1,11 @@
+version: "3.7"
+services:
+    my-box:
+        build: .
+        image: "${NAME}:${TAG}"
+        stdin_open: true
+        tty: true
+        #ports:
+        #    - "1053:53/udp"
+        volumes:
+            - "/opt/lb/tools:/opt/lb/tools"
