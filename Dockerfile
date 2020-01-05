@@ -36,11 +36,15 @@ RUN wget https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linu
     mv terraform /usr/local/bin/
 
 # Set bash CLI
-RUN echo "PS1='🐳  \[\033[1;36m\]\h \[\033[1;34m\]\W\[\033[0;35m\] \[\033[1;36m\]# \[\033[0m\]'" >> /root/.bashrc
+RUN echo "PS1='�~_~P�  \[^[[1;36m\]\h \[^[[1;34m\]\W\[^[[0;35m\] \[^[[1;36m\]# \[^[[0m\]\n   �~_~P�  ==> '" >> /root/.bashrc
+#RUN echo "PS1='🐳  \[\033[1;36m\]\h \[\033[1;34m\]\W\[\033[0;35m\] \[\033[1;36m\]# \[\033[0m\]'" >> /root/.bashrc
 
 # AWS IAM authenticator
 RUN curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator && \
     chmod +x ./aws-iam-authenticator && \
     mv ./aws-iam-authenticator /usr/local/bin/
 
-
+# install helm
+RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && \
+    chmod 700 get_helm.sh && \
+    ./get_helm.sh
