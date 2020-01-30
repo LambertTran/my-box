@@ -13,6 +13,7 @@ RUN	apt-get install -y python3-pip
 RUN pip3 install ansible boto3
 RUN apt-get install -y mysql-client
 RUN apt-get install -y unzip wget openssh-server
+#RUN apt-get install -y unzip wget
 
 # AWS CLI
 RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
@@ -36,7 +37,7 @@ RUN wget https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linu
     mv terraform /usr/local/bin/
 
 # Set bash CLI
-RUN echo "PS1='�~_~P�  \[^[[1;36m\]\h \[^[[1;34m\]\W\[^[[0;35m\] \[^[[1;36m\]# \[^[[0m\]\n   �~_~P�  ==> '" >> /root/.bashrc
+RUN echo "PS1='\[\033[1;36m\]\h \[\033[1;34m\]\W\[\033[0;35m\] \[\033[1;36m\]# \[\033[0m\]\n   🐳  '" >> /root/.bashrc
 #RUN echo "PS1='🐳  \[\033[1;36m\]\h \[\033[1;34m\]\W\[\033[0;35m\] \[\033[1;36m\]# \[\033[0m\]'" >> /root/.bashrc
 
 # AWS IAM authenticator
@@ -48,3 +49,12 @@ RUN curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/
 RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && \
     chmod 700 get_helm.sh && \
     ./get_helm.sh
+
+# cfssl
+RUN wget -q --show-progress --https-only --timestamping \
+    https://pkg.cfssl.org/R1.2/cfssl_linux-amd64 \
+    https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64 && \
+    chmod +x cfssl_linux-amd64 cfssljson_linux-amd64 && \
+    mv cfssl_linux-amd64 /usr/local/bin/cfssl && \
+    mv cfssljson_linux-amd64 /usr/local/bin/cfssljson && \
+    cfssl version
