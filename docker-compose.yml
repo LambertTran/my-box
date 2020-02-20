@@ -3,9 +3,11 @@ services:
     my-box:
         build: .
         image: "${NAME}:${TAG}"
+        restart: always
         stdin_open: true
         tty: true
-        #ports:
-        #    - "1053:53/udp"
+        hostname: box
+        container_name: box
         volumes:
             - "/opt/lb/tools:/opt/lb/tools"
+            - "/opt/lb/.ssh:/root/.ssh"

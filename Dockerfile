@@ -7,7 +7,9 @@ RUN apt-get update && \
 	aptitude \
 	curl \
 	dnsutils \
-  python3
+    python3 \
+    git \
+    telnet
 
 RUN	apt-get install -y python3-pip 
 RUN pip3 install ansible boto3
@@ -58,3 +60,9 @@ RUN wget -q --show-progress --https-only --timestamping \
     mv cfssl_linux-amd64 /usr/local/bin/cfssl && \
     mv cfssljson_linux-amd64 /usr/local/bin/cfssljson && \
     cfssl version
+
+# consul
+RUN wget https://releases.hashicorp.com/consul-template/0.24.1/consul-template_0.24.1_linux_amd64.tgz && \
+    tar -xvf consul-template_0.24.1_linux_amd64.tgz && \
+    mv ./consul-template /usr/local/bin/
+
