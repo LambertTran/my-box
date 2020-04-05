@@ -8,6 +8,11 @@ services:
         tty: true
         hostname: box
         container_name: box
+        environment:
+          - KUBECONFIG=/opt/lb/tools/helm/config
         volumes:
-            - "/opt/lb/tools:/opt/lb/tools"
+            - "/opt/lb:/opt/lb"
             - "/opt/lb/.ssh:/root/.ssh"
+            - "./resolv.conf:/etc/resolv.conf"
+            - "~/.bash_aliases:/root/.bash_aliases"
+        

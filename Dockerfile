@@ -1,21 +1,36 @@
 FROM ubuntu:bionic
 
 RUN apt-get update && \
-	apt-get -y upgrade && \
-	apt-get install -y \
-	vim \
-	aptitude \
-	curl \
-	dnsutils \
+    apt-get -y upgrade && \
+    apt-get install -y \
+    vim \
+    aptitude \
+    curl \
+    dnsutils \
     python3 \
     git \
-    telnet
+    telnet \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
 
-RUN	apt-get install -y python3-pip 
+RUN	apt-get install -y python3-pip
 RUN pip3 install ansible boto3
 RUN apt-get install -y mysql-client
 RUN apt-get install -y unzip wget openssh-server
 #RUN apt-get install -y unzip wget
+
+# Docker
+curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add -
+apt-key fingerprint 0EBFCD88
+add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/debian \
+   $(lsb_release -cs) \
+   stable"
+apt-get update
+apt-get install docker-ce docker-ce-cli containerd.io
 
 # AWS CLI
 RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
@@ -26,7 +41,7 @@ RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.
 # KOPS - kubernetes
 RUN wget https://github.com/kubernetes/kops/releases/download/1.10.0/kops-linux-amd64 && \
     chmod +x kops-linux-amd64 && \
-    mv kops-linux-amd64 /usr/local/bin/kops 
+    mv kops-linux-amd64 /usr/local/bin/kops
 
 # Install kubernetes
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl && \
@@ -65,4 +80,3 @@ RUN wget -q --show-progress --https-only --timestamping \
 RUN wget https://releases.hashicorp.com/consul-template/0.24.1/consul-template_0.24.1_linux_amd64.tgz && \
     tar -xvf consul-template_0.24.1_linux_amd64.tgz && \
     mv ./consul-template /usr/local/bin/
-
