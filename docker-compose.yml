@@ -6,13 +6,14 @@ services:
         restart: always
         stdin_open: true
         tty: true
+        ports:
+          - 10000:8080
         hostname: box
         container_name: box
         environment:
-          - KUBECONFIG=/opt/lb/tools/helm/config
+          - KUBECONFIG=/opt/lb/tools/helm/admin.conf
         volumes:
             - "/opt/lb:/opt/lb"
             - "/opt/lb/.ssh:/root/.ssh"
             - "./resolv.conf:/etc/resolv.conf"
             - "~/.bash_aliases:/root/.bash_aliases"
-        

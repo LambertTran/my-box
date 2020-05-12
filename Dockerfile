@@ -49,8 +49,8 @@ RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s 
     mv ./kubectl /usr/local/bin/kubectl
 
 # Terraform
-RUN wget https://releases.hashicorp.com/terraform/0.12.18/terraform_0.12.18_linux_amd64.zip && \
-    unzip terraform_0.12.18_linux_amd64.zip && \
+RUN wget https://releases.hashicorp.com/terraform/0.12.24/terraform_0.12.24_linux_amd64.zip && \
+    unzip terraform_0.12.24_linux_amd64.zip && \
     mv terraform /usr/local/bin/
 
 # Set bash CLI
