@@ -1,36 +1,20 @@
-FROM ubuntu:bionic
+FROM centos:centos8
 
-RUN apt-get update && \
-    apt-get -y upgrade && \
-    apt-get install -y \
+RUN yum update -y && \
+    yum -y upgrade && \
+    yum install -y \
     vim \
-    aptitude \
     curl \
-    dnsutils \
+    bind-utils \
     python3 \
     git \
     telnet \
-    apt-transport-https \
-    ca-certificates \
-    curl \
-    gnupg-agent \
-    software-properties-common
+    python3-pip \
+    mysql \
+    unzip \
+    wget
 
-RUN	apt-get install -y python3-pip
 RUN pip3 install ansible boto3
-RUN apt-get install -y mysql-client
-RUN apt-get install -y unzip wget openssh-server
-#RUN apt-get install -y unzip wget
-
-# Docker
-RUN curl -fsSL https://download.docker.com/linux/debian/gpg | apt-key add - && \
-    apt-key fingerprint 0EBFCD88 && \
-    add-apt-repository \
-        "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
-        $(lsb_release -cs) \
-        stable" && \
-    apt-get update && \
-    apt-get install -y docker-ce docker-ce-cli containerd.io
 
 # AWS CLI
 RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
@@ -39,9 +23,9 @@ RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.
 
 
 # KOPS - kubernetes
-RUN wget https://github.com/kubernetes/kops/releases/download/1.10.0/kops-linux-amd64 && \
-    chmod +x kops-linux-amd64 && \
-    mv kops-linux-amd64 /usr/local/bin/kops
+#RUN wget https://github.com/kubernetes/kops/releases/download/1.10.0/kops-linux-amd64 && \
+#    chmod +x kops-linux-amd64 && \
+#    mv kops-linux-amd64 /usr/local/bin/kops
 
 # Install kubernetes
 RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl && \
@@ -58,9 +42,9 @@ RUN echo "PS1='\[\033[1;36m\]\h \[\033[1;34m\]\W\[\033[0;35m\] \[\033[1;36m\]# \
 #RUN echo "PS1='🐳  \[\033[1;36m\]\h \[\033[1;34m\]\W\[\033[0;35m\] \[\033[1;36m\]# \[\033[0m\]'" >> /root/.bashrc
 
 # AWS IAM authenticator
-RUN curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator && \
-    chmod +x ./aws-iam-authenticator && \
-    mv ./aws-iam-authenticator /usr/local/bin/
+#RUN curl -o aws-iam-authenticator https://amazon-eks.s3-us-west-2.amazonaws.com/1.14.6/2019-08-22/bin/linux/amd64/aws-iam-authenticator && \
+#    chmod +x ./aws-iam-authenticator && \
+#    mv ./aws-iam-authenticator /usr/local/bin/
 
 # install helm
 RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 && \
@@ -68,13 +52,13 @@ RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master
     ./get_helm.sh
 
 # cfssl
-RUN wget -q --show-progress --https-only --timestamping \
-    https://pkg.cfssl.org/R1.2/cfssl_linux-amd64 \
-    https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64 && \
-    chmod +x cfssl_linux-amd64 cfssljson_linux-amd64 && \
-    mv cfssl_linux-amd64 /usr/local/bin/cfssl && \
-    mv cfssljson_linux-amd64 /usr/local/bin/cfssljson && \
-    cfssl version
+#RUN wget -q --show-progress --https-only --timestamping \
+#    https://pkg.cfssl.org/R1.2/cfssl_linux-amd64 \
+#    https://pkg.cfssl.org/R1.2/cfssljson_linux-amd64 && \
+#    chmod +x cfssl_linux-amd64 cfssljson_linux-amd64 && \
+#    mv cfssl_linux-amd64 /usr/local/bin/cfssl && \
+#    mv cfssljson_linux-amd64 /usr/local/bin/cfssljson && \
+#    cfssl version
 
 # consul
 RUN wget https://releases.hashicorp.com/consul-template/0.24.1/consul-template_0.24.1_linux_amd64.tgz && \
