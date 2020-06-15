@@ -64,3 +64,5 @@ RUN curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/master
 RUN wget https://releases.hashicorp.com/consul-template/0.24.1/consul-template_0.24.1_linux_amd64.tgz && \
     tar -xvf consul-template_0.24.1_linux_amd64.tgz && \
     mv ./consul-template /usr/local/bin/
+
+COPY ./.bashrc /root/
