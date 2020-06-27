@@ -12,7 +12,9 @@ RUN yum update -y && \
     python3-pip \
     mysql \
     unzip \
-    wget
+    wget \
+    mysql-libs-8.0.17-3.module_el8.0.0+181+899d6349.x86_64 \
+    python3-devel
 
 RUN pip3 install ansible boto3
 
