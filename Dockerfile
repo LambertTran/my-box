@@ -12,7 +12,7 @@ RUN yum update -y && \
     mysql \
     unzip \
     wget \
-    mysql-libs-8.0.17-3.module_el8.0.0+181+899d6349.x86_64 \
+    mysql \
     nodejs \
     python3-devel
 
