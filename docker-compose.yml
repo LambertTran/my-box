@@ -1,19 +1,27 @@
 version: "3.7"
 services:
-    my-box:
-        build: .
-        image: "${NAME}:${TAG}"
-        restart: always
-        stdin_open: true
-        tty: true
-        ports:
-          - 10000:8080
-        hostname: box
-        container_name: box
-        environment:
-          - KUBECONFIG=/opt/lb/tools/helm/admin.conf
-        volumes:
-            - "/opt/lb:/opt/lb"
-            - "/opt/lb/.ssh:/root/.ssh"
-            - "./resolv.conf:/etc/resolv.conf"
-            - "~/.bash_aliases:/root/.bash_aliases"
+  my-box:
+    build: .
+    image: "${NAME}:${TAG}"
+    restart: always
+    stdin_open: true
+    tty: true
+    ports:
+      - 10000:8080
+    hostname: box
+    container_name: box
+    environment:
+    - KUBECONFIG=/opt/lb/tools/helm/admin.conf
+    volumes:
+      - "/opt/lb:/opt/lb"
+      - "/opt/lb/.ssh:/root/.ssh"
+      - "./resolv.conf:/etc/resolv.conf"
+      - "~/.bash_aliases:/root/.bash_aliases"
+
+  nginx:
+    image: nginx
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - "/opt/lb/tools/certs/hosts:/etc/nginx"
