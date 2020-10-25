@@ -16,7 +16,7 @@ RUN yum update -y && \
     nodejs \
     python3-devel
 
-RUN pip3 install ansible boto3
+RUN pip3 install ansible boto3 requests
 
 # AWS CLI
 RUN curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip" && \
