@@ -17,9 +17,6 @@ jobs:
         docker-compose push
     - name: Notify slack fail
       if: failure()
+      uses: rtCamp/action-slack-notify@master
       env:
-        uses: voxmedia/github-action-slack-notify-build@v1
-        with:
-          channel: app-alerts
-          status: FAILED
-          color: danger
+        SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
