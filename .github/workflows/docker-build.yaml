@@ -15,3 +15,11 @@ jobs:
         echo "${{ secrets.my_docker_login}}" | docker login -u "alirom93" --password-stdin
         docker-compose build
         docker-compose push
+    - name: Notify slack fail
+      if: failure()
+      env:
+        uses: voxmedia/github-action-slack-notify-build@v1
+        with:
+          channel: app-alerts
+          status: FAILED
+          color: danger
