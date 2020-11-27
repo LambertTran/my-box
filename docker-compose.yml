@@ -11,7 +11,7 @@ services:
     hostname: box
     container_name: box
     environment:
-    - KUBECONFIG=/opt/lb/tools/helm/admin.conf
+    - KUBECONFIG=/opt/lb/tools/helm/dev-admin.conf
     volumes:
       - "/opt/lb:/opt/lb"
       - "/opt/lb/.ssh:/root/.ssh"

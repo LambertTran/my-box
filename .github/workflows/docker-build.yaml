@@ -1,18 +1,19 @@
-name: Build new Docker img
+name: Build new image
 # This workflow is triggered on pushes to the repository.
 on: [push]
 
 jobs:
   build:
-    # Job name is Greeting
-    name: my-box-Build
+    # Stage name
+    name: build-img
     # This job runs on Linux
     runs-on: ubuntu-latest
+    # Step build
     steps:
     - uses: actions/checkout@v1
     - name: Build Img
       run: |
-        echo "${{ secrets.my_docker_login}}" | docker login -u "alirom93" --password-stdin
+        echo "${{ secrets.MY_DOCKER_LOGIN }}" | docker login -u "alirom93" --password-stdin
         docker-compose build
         docker-compose push
     - name: Notify slack fail
