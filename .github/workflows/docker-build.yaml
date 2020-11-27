@@ -1,6 +1,9 @@
 name: Build new image
 # This workflow is triggered on pushes to the repository.
-on: [push]
+on:
+  push:
+    paths:
+      - .env
 
 jobs:
   build:
